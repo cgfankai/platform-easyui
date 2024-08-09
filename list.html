@@ -16,28 +16,35 @@
     </div>
 
     <div id="tb" style="padding:2px 5px;">
-        <a href="#" class="easyui-linkbutton" iconCls="icon-reload">刷新</a>
-        创建日期：<input class="easyui-datebox" style="width:110px">
-        单位:
-        <select class="easyui-combobox" panelHeight="auto" style="width:100px">
-            <option value="all">全部</option>
-            <option value="java">Java</option>
-            <option value="c">C</option>
-            <option value="basic">Basic</option>
-            <option value="perl">Perl</option>
-            <option value="python">Python</option>
+        <select class="easyui-combobox" panelHeight="auto" style="width:180px">
+            <option value="todo">待办事项</option>
+            <option value="hasDone">已办事项</option>
+            <option value="all">全部事项</option>
         </select>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-reload" onclick="$('#dg').datagrid('reload')">刷新</a>
 
     </div>
 
     <script>
+        var _queryCount = 0;
         var toolbar = [{
             text: '刷新',
             iconCls: 'icon-reload',
             handler: function () { alert('add') }
         }];
+        function formatter(value){
+            if(value == 0){
+                return '男'
+            }
+            if(value == 1){
+                return '女'
+            }
+            if(value == 2){
+                return '其他'
+            }
+        }
         var dg = $('#dg').datagrid({
-            url: GLOBAL_DATA.urlPrefix + "api/v1/system/sysuser/list",
+            url: COMMON_DATA.urlPrefix + "api/v1/system/sysuser/list",
             loadFilter: function (rlt) {
                 if (rlt.code == 200) {
                     return rlt.data;
@@ -48,8 +55,15 @@
                     };
                 }
             },
+            onBeforeLoad: function (param) {
+                if (_queryCount < 0) {
+                    _queryCount = _queryCount + 3;
+                    return false;
+                }
+            },
             fit: true,
             fitColumns: true,
+            remoteFilter: true,
             nowrap: true,
             pagination: true,
             pageSize: 50,
@@ -101,7 +115,43 @@
                     dg.datagrid('doFilter');
                 },
             },
-        }]);
+        },
+        {
+            field: "sex",
+            type: 'combobox',
+            options: {
+                url: COMMON_DATA.urlPrefix + "api/v1/system/sysdictdata/sysdicttype/" + "1",
+                method: 'get',
+                editable: false,
+                textField: "dictLabel",
+                valueField: "dictValue",
+                loadFilter: function (data) {
+                    if (data.code == 200 && data.data != null) {
+                        data.data.splice(0, 0, {
+                            dictValue: "all",
+                            dictLabel: "全部",
+                            selected: true,
+                        })
+                        return data.data;
+                    } else {
+                        return []
+                    }
+                },
+                onChange: function (value) {
+                    if ("" == value || "all" == value) {
+                        dg.datagrid('removeFilterRule', "sex");
+                    } else {
+                        dg.datagrid('addFilterRule', {
+                            field: "sex",
+                            op: 'equal',
+                            value: value
+                        });
+                    }
+                    dg.datagrid('doFilter');
+                },
+            },
+        }
+        ]);
     </script>
 </body>
 

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script type="text/javascript" src="easyui-boot.js"></script>
+    <script type="text/javascript" src="platform-frame.js"></script>
 </head>
 
 <body class="easyui-layout">
@@ -18,7 +19,7 @@
     </div>
     <div data-options="region:'center'">
         <div id="index-tabs" class="easyui-tabs"
-            data-options="fit:true,pill:true,onBeforeClose:PLATFORM_UTILS.tabBeforeCloseHandler">
+            data-options="fit:true,pill:true,onBeforeClose:PLATFORM_FRAME_UTILS.tabBeforeCloseHandler">
         </div>
     </div>
     <div data-options="region:'south',split:true" style="height:40px;text-align: center;">
@@ -39,7 +40,7 @@
             closable: false,
             id: 0
         });
-        PLATFORM_UTILS.loadLeftMenu();
+        PLATFORM_FRAME_UTILS.loadLeftMenu();
     });
 </script>
 

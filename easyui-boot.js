@@ -41,7 +41,7 @@ document.write('<script src="' + bootPATH + 'lodash.min.1.8.3.js" type="text/jav
 document.write('<link href="' + bootPATH + 'font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />');
 
 //自定义js
-document.write('<script src="' + bootPATH + 'platform.js" type="text/javascript"></script>');
+document.write('<script src="' + bootPATH + 'data.js" type="text/javascript"></script>');
 
 
 var easyUiUtil = {
