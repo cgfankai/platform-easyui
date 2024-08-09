@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="easyui-boot.js"></script>
+</head>
+
+<body class="easyui-layout">
+    <!-- <div data-options="region:'north'" style="height:0px;border: 0;">
+    </div> -->
+    <div data-options="region:'center'">
+        <table id="dg"></table>
+    </div>
+
+    <div id="tb" style="padding:2px 5px;">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-reload">刷新</a>
+        创建日期：<input class="easyui-datebox" style="width:110px">
+        单位:
+        <select class="easyui-combobox" panelHeight="auto" style="width:100px">
+            <option value="all">全部</option>
+            <option value="java">Java</option>
+            <option value="c">C</option>
+            <option value="basic">Basic</option>
+            <option value="perl">Perl</option>
+            <option value="python">Python</option>
+        </select>
+
+    </div>
+
+    <script>
+        var toolbar = [{
+            text: '刷新',
+            iconCls: 'icon-reload',
+            handler: function () { alert('add') }
+        }];
+        var dg = $('#dg').datagrid({
+            url: GLOBAL_DATA.urlPrefix + "api/v1/system/user/list",
+            loadFilter: function (rlt) {
+                if (rlt.code == 200) {
+                    return rlt.data;
+                } else {
+                    return {
+                        rows: [],
+                        total: 0
+                    };
+                }
+
+            },
+            fit: true,
+            fitColumns: true,
+            nowrap: true,
+            pagination: true,
+            pageSize: 50,
+            toolbar: '#tb',
+            pageList: [50, 100, 200, 300, 400, 500],
+            columns: [[
+                { field: 'code', title: '工号', width: 100, align: 'center' },
+                { field: 'name', title: '姓名', width: 100, align: 'center' },
+                { field: 'sex', title: '性别', width: 100, align: 'center' }
+            ]]
+        });
+        dg.datagrid('enableFilter');
+    </script>
+</body>
+
+</html>

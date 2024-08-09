@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="easyui-boot.js"></script>
+</head>
+
+<body class="easyui-layout">
+    <div data-options="region:'north'" style="height:75px;background-color: #157FCC;border: 0;">
+        <span style="color: white;font-size: 30px;line-height: 70px;margin-left: 10px;">统一开发平台</span>
+    </div>
+    <div data-options="region:'west',title:'系统菜单',split:true" style="width:250px;">
+        <div class="easyui-accordion" data-options="" id="left-according">
+        </div>
+    </div>
+    <div data-options="region:'center'">
+        <div id="index-tabs" class="easyui-tabs"
+            data-options="fit:true,pill:true,onBeforeClose:PLATFORM_UTILS.tabBeforeCloseHandler">
+        </div>
+    </div>
+    <div data-options="region:'south',split:true" style="height:40px;text-align: center;">
+        <div style="position: absolute;bottom: 8px;left: 8px;">用户：测试用户 单位：数智化事业部</div>
+        <span style="position: relative;top: 5px;">技术支持：00000</span>
+        <div style="position: absolute;bottom: 8px;right: 10px;">版本号：v2024.0808.001 版权所有：中铁第四勘察设计院集团有限公司</div>
+    </div>
+
+</body>
+
+
+<script>
+    $(document).ready(function () {
+        $("#index-tabs").tabs('add', {
+            title: '门户',
+            selected: true,
+            content: '<iframe src="dashboard.html" frameborder="0" style="border:0;width:100%;height:99.4%;"></iframe>',
+            closable: false,
+            id: 0
+        });
+        PLATFORM_UTILS.loadLeftMenu();
+    });
+</script>
+
+<style>
+    .tree-icon {
+        color: #157FCC;
+    }
+
+    /* .tree-file {
+        background-image: none;
+    } */
+</style>
+
+</html>
