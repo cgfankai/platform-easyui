@@ -37,7 +37,7 @@
             handler: function () { alert('add') }
         }];
         var dg = $('#dg').datagrid({
-            url: GLOBAL_DATA.urlPrefix + "api/v1/system/user/list",
+            url: GLOBAL_DATA.urlPrefix + "api/v1/system/sysuser/list",
             loadFilter: function (rlt) {
                 if (rlt.code == 200) {
                     return rlt.data;
@@ -47,7 +47,6 @@
                         total: 0
                     };
                 }
-
             },
             fit: true,
             fitColumns: true,
@@ -59,10 +58,50 @@
             columns: [[
                 { field: 'code', title: '工号', width: 100, align: 'center' },
                 { field: 'name', title: '姓名', width: 100, align: 'center' },
-                { field: 'sex', title: '性别', width: 100, align: 'center' }
+                { field: 'sex', title: '性别', width: 100, align: 'center' },
+                { field: 'birthday', title: '出生年月', width: 100, align: 'center' },
+                { field: 'createDatetime', title: '创建时间', width: 100, align: 'center' }
             ]]
         });
-        dg.datagrid('enableFilter');
+        dg.datagrid('enableFilter', [{
+            field: "birthday",
+            type: 'datebox',
+            options: {
+                editable: false,
+                buttons: EASYUI_UTILS.dateboxClearButtons,
+                onChange: function (value) {
+                    if ("" == value) {
+                        dg.datagrid('removeFilterRule', "birthday");
+                    } else {
+                        dg.datagrid('addFilterRule', {
+                            field: "birthday",
+                            op: 'equal',
+                            value: value
+                        });
+                    }
+                    dg.datagrid('doFilter');
+                },
+            },
+        }, {
+            field: "createDatetime",
+            type: 'datetimebox',
+            options: {
+                editable: false,
+                buttons: EASYUI_UTILS.datetimeboxClearButtons,
+                onChange: function (value) {
+                    if ("" == value) {
+                        dg.datagrid('removeFilterRule', "createDatetime");
+                    } else {
+                        dg.datagrid('addFilterRule', {
+                            field: "createDatetime",
+                            op: 'equal',
+                            value: value
+                        });
+                    }
+                    dg.datagrid('doFilter');
+                },
+            },
+        }]);
     </script>
 </body>
 
